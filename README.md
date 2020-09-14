@@ -1,5 +1,17 @@
 # Functional Programming with Javascript 
 
+## How to Run this project
+1. clone this project
+
+2. ```yarn install ```
+
+3. You need to have a Nasa API key access the API end points: https://api.nasa.gov/.
+
+After everything is succesfully installed, run the project using ```yarn start``` go to `http:localhost:3000`. 
+The default image you will see on the screen is a picture of the day and when you will click on the names of the rovers displayed in the tab then the data of the respective rover will be dynamically displayed on the screen.
+
+**********************************************************
+
 ## Student Instructions
 
 ### Big Picture

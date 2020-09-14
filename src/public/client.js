@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-use-before-define */
 const store = Immutable.Map({
     user: Immutable.Map({ name: "Student" }),
     apod: '',
@@ -12,7 +14,6 @@ const store = Immutable.Map({
 const root = document.getElementById('root');
 
 const updateStore = (store, newState) => {
-    debugger;
     const newStore = store.merge(newState);
     render(root, newStore)
 }
@@ -23,8 +24,6 @@ const render = async (root, state) => {
 
 // create content
 const App = (state) => {
-    debugger;
-
     return `
         <header></header>
         <main>
@@ -96,7 +95,6 @@ const imageInfoExtractor = (obj) => {
 }
 
 const arrayOfImages = (rover) => {
-    debugger;
     return rover.map(imageInfoExtractor);
 }
 
@@ -105,12 +103,9 @@ const arrayOfImages = (rover) => {
 */
 const displayRoverData = (rover) => {
     const roverData = filterRoverData(rover);
-    debugger;
 
     const roverDataInfo = roverData[0].rover;
     const roverImage = roverData[0].img_src;
-
-    debugger;
 
     const imagesArray = arrayOfImages(roverData);
 
@@ -156,12 +151,7 @@ const displayRoverData = (rover) => {
 * Function to check if the obj is empty or not 
 */
 function isEmpty(obj) {
-    for(var prop in obj) {
-        if(obj.hasOwnProperty(prop))
-            return false;
-    }
-
-    return true;
+   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
 /*
@@ -169,7 +159,6 @@ function isEmpty(obj) {
 * value of selected tab to display the info to the UI
 */
 const displayPage = (store) => {
-    debugger;
     const storeObj = store.toJS();
     let { selectedTab, apod } = storeObj;
     if(selectedTab === 'apod') {
@@ -181,7 +170,7 @@ const displayPage = (store) => {
         if (!apod || apod.date === today.getDate() ) {
             getImageOfTheDay(store)
         }
-        debugger;
+
         // check if the photo of the day is actually type video!
         if(apod.media_type === "video") {
             return (`
@@ -208,7 +197,6 @@ const displayPage = (store) => {
             }
         }
     } else if(selectedTab === 'curiosity') {
-        debugger;
         let { curiosityData } = storeObj;
         if(!isEmpty(curiosityData)) {
             return (displayRoverData(curiosityData));
@@ -219,7 +207,6 @@ const displayPage = (store) => {
             } 
         }
     } else if(selectedTab === 'opportunity') {
-        debugger;
         let { opportunityData } = storeObj;
         if(!isEmpty(opportunityData)) {
             return (displayRoverData(opportunityData));
@@ -230,7 +217,6 @@ const displayPage = (store) => {
             } 
         }
     } else if(selectedTab === 'spirit') {
-        debugger;
         let { spiritData } = storeObj;
         if(!isEmpty(spiritData)) {
             return (displayRoverData(spiritData));
@@ -248,8 +234,8 @@ const displayPage = (store) => {
 /*
 * Function to determine which tab has been selected
 */
+/*eslint-disable */
 const selectTab = (tabName) => {
-    debugger;
     if(tabName === 'apod') {
         updateStore(store, { selectedTab: 'apod' })
     } else if(tabName === 'curiosity') {
@@ -265,9 +251,6 @@ const selectTab = (tabName) => {
 
 // Example API call
 const getImageOfTheDay = (state) => {
-    const stateObj = state.toJS();
-    let { apod } = stateObj;
-    debugger;
 
     fetch(`http://localhost:3000/apod`)
         .then(res => res.json())
